@@ -1,0 +1,15 @@
+{
+  "name": "astro-calculator",
+  "version": "1.0.0",
+  "author": "Enloe Science Olympiad",
+  "description": "A calculator that makes computing formulas for Astronomy quicker and easier.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.2.3",
+    "electron-packager": "^15.2.0"
+  }
+}

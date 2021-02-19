@@ -1,0 +1,91 @@
+HTML Basics
+    Element: anything inside something that looks like <tag></tag>, is a node on the DOM tree
+    DOM: Document Object Model, tree of nodes that the browser references to render the page
+    Parent: Element that the given element is inside of
+    Child: Element inside of the given element
+
+    Semantic meaning: When your choice of element indicates something about its function in the webpage. Considered good practice for readability and accessibility
+
+    Common Elements:
+        div: represents a thing on the page, semantically meaningless and general purpose
+        h1, h2, ... h6: Different size headers used for different levels of importance (article titles, section headers)
+        p: paragraph text, general purpose text
+        ul: unordered list, bulleted by default. Carries a little semantic meaning
+        ol: ordered list, numbered by default. Carries a little semantic meaning
+        li: list element. Used inside ul and ol to represent items in the list
+        a: anchor tag, represents a link to something (another page or a location on the current page)
+        input: used as a place to input information, meant to be paired with HTML forms to collect and send information
+        label: used to associate a label with an input, acts just as text but carries lots of semantic meaning
+        select: dropdown list, not considered a kind of input because ?????????
+        option: option in a select (dropdown list)
+        button: is a button
+
+    Notes:
+        - Pay attention to which elements are inside each other, sectioning off groups of elements is extremely important
+        - If you need to reference a single element, use its ID. If you need to reference a specific group of elements, use a class
+        - Convention is to use "Kebab case", naming-elements-like-this
+
+CSS Basics:
+    Format: selector { property: value; more declarations }
+
+    Selectors: 
+        tags (div, ul, a): selects all elements of that type
+        classes (.textboxes, .odd-numbered): Represent user-defined groups of elements. Elements can have more than one class
+        ids (#main, #sidebar): Selects one specific element on the page. Having multiple elements with the same ID will cause weird things that aren't good
+        nesting: putting selectors one after another to narrow down to the specific elements you want. An example would be #main ul li, which would select all list elements that are inside unordered lists inside the element with ID "main".
+
+    Declarations: Define a property of elements' looks/styling/behavior
+    Common properties:
+        color: The text color
+        background: alias for things like background-color, background-image, background-repeat, etc. Any of these properties can be set through background
+        margin: Defines space around an element, or space between an element and its siblings
+        padding: Defines space between an element's border and any of it's children (think the space between the edge of your paper and where the text starts, ironically called "margins" but much more similar to padding)
+        display: Changes how an element displays on the page (it's size, arrangement, etc.)
+        position: Changes how an element is positioned on the page (postioned relative to another element, with the flow of the document, etc.)
+        overflow: What happens when there is more content inside an element than can fit (start scrolling, just flow off the side and stay hidden)
+    
+    Common units: 
+        px: pixels
+        em: Size relative to the font size in that element, 2em is twice as big as the font size
+        vw, vh: Percent of the window's width/height, 20vw is 1/5 of the window's width
+        %: Percent relative to an element's parent*****, can behave unexpectedly without knowing the rules inside and out
+
+
+    Notes:
+        - Avoid redundant CSS, use a class so you don't repeat the same few declarations over and over again
+        - Just like HTML, use "Kebab case"
+        - There are 100 ways to do something right in CSS, but some are more flexible and more robust than others
+        - If you want to try and center an element, just give up it's too late for your sanity
+
+JS Basics:
+    Syntax: Really similar to Java, similar to all other descendents of C
+
+    Common variables/functions/operators:
+        document: represents the current webpage
+        document.getElementById(id: string): Returns an HTMLElement object that represents the element on the page
+        element.value: For elements where the user provides input, this returns the input they gave
+        element.innerHTML: All of the HTML text inside that element. This can be dangerous to modify and can break the page
+        element.innerText: Just the plain text directly inside that element
+        condition ? valeIfTrue : valueIfFalse: Ternary operator, can return a value based on a condition without having to delcare a function for the evaluation of an if statement
+        object?.prop1?.prop2?.prop3: Optional chaining, returns undefined if object, prop1, prop2, or prop3 are undefined instead of throwing "cannot read property of undefined"
+        ===: Strict equality, tests if value and type match. Use this where you would use == in other languages, == in JS can have unintended consequences like 1 == "1" returning true
+        async: you won't need it but promises are literally the most elegant way to handle asynchronous code execution I've ever seen its cool take a look :)
+
+    Literals:
+        String: "" or ''
+        Array: [] (note that an array is a special case of an Object, not its own primitive type)
+        Object: {} (acts both as a class object extending the Object prototype and like a Python dictionary)
+        Regex: // (will display as comment until something is added between the slashes)
+        Template string: `` (provides an alternative to concatenation, if a = 2 and b = 3 then `a: ${a}, b: ${b}` will be the same as "a: " + a + ", b: " + b)
+        Function: function name() {} (omitting name is still a valid function, but it can't be referenced unless stored to a variable)
+        Arrow function: () => {} (not named by default, have to be stored to variables or passed to higher order functions. Use like you would use a Python lambda)
+
+    Notes: 
+        - If you don't get something, Google it, you'll get 10 great websites explaining what you need. JS is extremely well documented.
+        - Classes are in PascalCase, variables and functions are in camelCase, constants are in snake_case
+        - Ctrl + Shift + I opens developer tools, the element selector at the very top left of dev tools and the console will both be huge helps when debugging code or adjusting HTML
+        - Use let for variables unless you have a reason to otherwise, but remember that let is block scoped and can be reassigned but not redeclared.
+        - Consts are mutable, but not reassignable
+        - Var is reassignable and redeclarable, declarations are also hoisted to the top of the function before execution. 90% of the time this won't matter, but either way using let is safer
+
+
