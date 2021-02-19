@@ -1,0 +1,33 @@
+<label for="mass">
+    <select id="mass-units" name="mass-units"> <!-- unit selection dropdown -->
+        <option value="kg" selected="selected">kg</option>  <!-- selected="selected" makes this the default units -->
+        <option value="solar-mass">M<sub>&#8857;</sub></option>     <!-- value tag is what the JS code sees, the inside of the <option></option> tags is what the user sees in the dropdown -->
+    </select>
+    Mass:   <!-- text displayed to user next to text box so they know which quantity to input -->
+    <input id="mass" type="text" oninput="massElementInput()">  <!-- text box where user inputs a number, on every input (new character added) the function is run -->
+</label>
+<br><br>    <!-- two line breaks between inputs -->
+<label for="radius">
+    <select id="radius-units" name="radius-units">
+        <option value="m" selected="selected">m</option>
+        <option value="km">km</option>
+        <option value="AU">AU</option>
+        <option value="ly">ly</option>
+    </select>
+    Radius:
+    <input id="radius" type="text" oninput="radiusElementInput()">
+</label>
+<br><br>
+<label for="velocity">
+    <select id="velocity-units" name="velocity-units">
+        <option value="m/s" selected="selected">m/s</option>
+        <option value="mph">mph</option>
+        <option value="c">c</option>
+    </select>
+    Velocity:
+    <input id="velocity" type="text" oninput="velocityElementInput()">
+</label>
+<br><br>
+<button onclick="calculateCV()">Calculate</button> <!-- button that runs the function to calculate the value when clicked -->
+
+<h2 id="result"></h2>

@@ -1,0 +1,18 @@
+<label for="velocity">
+    <select id="velocity-units" name="velocity-units">
+        <option value="m/s" selected="selected">m/s</option>
+        <option value="mph">mph</option>
+        <option value="c">c</option>
+    </select>
+    Velocity:
+    <input id="velocity" type="text" oninput="velocityElementInput()">
+</label>
+<br><br>
+<label for="redshift">
+    Redshift:
+    <input id="redshift" type="text" oninput="redshiftElementInput()">
+</label>
+<br><br>
+<button onclick="calculateRDS()">Calculate</button>
+
+<h2 id="result"></h2>
