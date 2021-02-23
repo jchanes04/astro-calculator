@@ -1,1 +1,26 @@
+<label for="angle">
+    <select id="angle-units" name="angle-units" onchange="angleUnitsChange()">
+        <option value="arcseconds" selected="selected">as</option>
+        <option value="DMS">DMS</option>
+        <option value="deg">deg</option>
+        <option value="rad">rad</option>
+    </select>
+    Angle:
+    <input id="angle" type="text" oninput="angleElementInput()">
+</label>
+<br><br>
+<label for="distance">
+    <select id="distance-units" name="distance-units">
+        <option value="pc" selected="selected">pc</option>
+        <option value="ly">ly</option>
+        <option value="AU">AU</option>
+        <option value="km">km</option>
+        <option value="m">m</option>
+    </select>
+    Distance:
+    <input id="distance" type="text" oninput="distanceElementInput()">
+</label>
+<br><br>
+<button onclick="calculateParallax()">Calculate</button>
 
+<h2 id="result"></h2>

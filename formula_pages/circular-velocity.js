@@ -1,5 +1,3 @@
-const SciNotNumber = require("../SciNotNumber")
-
 var massElement = document.getElementById("mass")           //
 var radiusElement = document.getElementById("radius")       // gets HTML elements to be referenced later, these are the text boxes where numbers are input
 var velocityElement = document.getElementById("velocity")   //

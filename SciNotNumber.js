@@ -43,7 +43,9 @@ class SciNotNumber {
         }
 
         this.power = powerTemp + addToPower
-        this.valid = true
+        if (this.decimals !== NaN && this.power !== NaN) {
+            this.valid = true
+        }
     }
 
     static invalidNumber = new SciNotNumber()
@@ -59,7 +61,11 @@ class SciNotNumber {
     add(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            numberTemp = number
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
         } else if (typeof number === "number" || typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         } else {
@@ -73,7 +79,11 @@ class SciNotNumber {
     subtract(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            numberTemp = number
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
         } else if (typeof number === "number" || typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         } else {
@@ -87,7 +97,11 @@ class SciNotNumber {
     multiply(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            numberTemp = number
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
         } else if (typeof number === "number" || typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         } else {
@@ -101,7 +115,11 @@ class SciNotNumber {
     divide(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            numberTemp = number
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
         } else if (typeof number === "number" || typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         } else {
@@ -117,11 +135,40 @@ class SciNotNumber {
         if (typeof number === "number") {
             return new SciNotNumber(this.decimals**number, this.power * number)
         } else if (number instanceof SciNotNumber) {
-            numberTemp = number
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
         } else if (typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         }
         return new SciNotNumber(this.decimals**numberTemp.toNumber(), this.power * numberTemp.toNumber())
+    }
+
+    floor() {
+        return new SciNotNumber(Math.floor(this.toNumber()), 0)
+    }
+
+    ceil() {
+        return new SciNotNumber(Math.ceil(this.toNumber()), 0)
+    }
+
+    mod(number) {
+        var numberTemp
+        if (typeof number === "number") {
+            return new SciNotNumber(this.decimals**number, this.power * number)
+        } else if (number instanceof SciNotNumber) {
+            if (number.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
+        } else if (typeof number === "string") {
+            numberTemp = new SciNotNumber(number, 0)
+        }
+        let divided = this.divide(numberTemp)
+        return new SciNotNumber(this.subtract(divided.floor().multiply(this)), 0)
     }
 }
 

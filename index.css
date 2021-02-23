@@ -29,7 +29,7 @@ body {
     width: 20vw;
     min-width: 180px;
     background: #494946;
-    border-right: #161818 1px solid;
+    border-right: #161818 2px solid;
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 15px 5px 15px 15px;
@@ -46,6 +46,8 @@ body {
     font-size: 20px;
     margin-top: 8px;
     margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
 }
 
 #main {
