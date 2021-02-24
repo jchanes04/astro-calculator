@@ -1,4 +1,5 @@
 const fs = require("fs")    // filesystem, used to read and write to files
+const { networkInterfaces } = require("os")
 const SciNotNumber = require('./SciNotNumber')
 const sciNotInputRegex = /^[0-9]*\.?[0-9]*(e[0-9]*)?$/   // tests valid numerical input
 const sciNotVerifyRegex = /^[0-9]+(?:\.[0-9]+)?(e[0-9]+)?$/
@@ -10,6 +11,7 @@ const radianVerifyRegex = /^([0-9]+\/[0-9]+)|([0-9]+(?:\.[0-9]+)?)[pπ]?$/
 const PI = 3.1415926535
 const gravitational_constant = new SciNotNumber(6.6743, -11)
 const speed_of_light = new SciNotNumber(3, 8)
+const wiens_constant = new SciNotNumber(2.9, 6)
 
 const miles_to_meters = new SciNotNumber(1.60934, 3)
 const mph_to_meters_per_second = new SciNotNumber(4.4704, -1)
@@ -24,7 +26,26 @@ function getFormulaPage(page) {     // called when a new formula page needs to b
     let pageHTML = fs.readFileSync("./formula_pages/" + page + ".html")     
     document.getElementById("main").innerHTML = pageHTML    // fetches HTML and insterts inside the div with ID "main"
     let scriptHTML = fs.readFileSync("./formula_pages/" + page + ".js")
+    let insertedScripts = document.getElementsByClassName("inserted")
+    for (let i = insertedScripts.length - 1; i >= 0; i--) {
+        insertedScripts[i].remove()
+    }
     let scriptElement = document.createElement("script")
+    scriptElement.classList.add("inserted")
     scriptElement.innerHTML = scriptHTML
     document.head.appendChild(scriptElement)    // fetches JS and insters inside the head of the document
+}
+
+function getSettings() {
+    let settingsHTML = fs.readFileSync("./settings.html")
+    document.getElementById("main").innerHTML = settingsHTML
+    let scriptHTML = fs.readFileSync("./settings.js")
+    let insertedScripts = document.getElementsByClassName("inserted")
+    for (let i = insertedScripts.length - 1; i >= 0; i--) {
+        insertedScripts[i].remove()
+    }
+    let scriptElement = document.createElement("script")
+    scriptElement.classList.add("inserted")
+    scriptElement.innerHTML = scriptHTML
+    document.head.appendChild(scriptElement)
 }

@@ -5,7 +5,7 @@ var previousVelocityInput = ""
 var previousRedshiftInput = ""
 
 function velocityElementInput() {
-    if (sciNotRegex.test(velocityElement.value)) {
+    if (sciNotInputRegex.test(velocityElement.value)) {
         previousVelocityInput = velocityElement.value
     } else {
         velocityElement.value = previousVelocityInput
@@ -13,7 +13,7 @@ function velocityElementInput() {
 }
 
 function redshiftElementInput() {
-    if (sciNotRegex.test(redshiftElement.value)) {
+    if (sciNotInputRegex.test(redshiftElement.value)) {
         previousRedshiftInput = redshiftElement.value
     } else {
         redshiftElement.value = previousRedshiftInput
@@ -29,7 +29,7 @@ function calculateRDS() {
         let ratio = velocity.divide(speed_of_light)
         let one = new SciNotNumber(1, 0)
         result = (ratio.add(1).divide(one.subtract(ratio))).pow(0.5).subtract(one)
-        resultElement.innerText = result
+        resultElement.innerHTML = result
     } else if (!velocity.valid && redshift.valid) {
         let aSquared = redshift.add(1).pow(2)
         console.log(aSquared.toString())
@@ -37,13 +37,13 @@ function calculateRDS() {
         console.log(result.toString())
         switch (document.getElementById("velocity-units").value) {
             case "m/s":
-                resultElement.innerText = result + " m/s"
+                resultElement.innerHTML = result + " m/s"
                 break
             case "mph": 
-                resultElement.innerText = result.divide(mph_to_meters_per_second) + " mph"
+                resultElement.innerHTML = result.divide(mph_to_meters_per_second) + " mph"
                 break
             case "c":
-                resultElement.innerText = result.divide(speed_of_light) + " c"
+                resultElement.innerHTML = result.divide(speed_of_light) + " c"
                 break
         }
     }

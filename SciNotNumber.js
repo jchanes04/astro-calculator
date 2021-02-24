@@ -15,6 +15,19 @@ class SciNotNumber {
             return
         }
 
+        if (decimalsTemp < 0) {
+            decimalsTemp = decimalsTemp * -1
+            this.negative = true
+        } else if (decimalsTemp === 0) {
+            this.decimals = 0
+            this.power = 0
+            this.negative = null
+            this.valid = true
+            return
+        } else {
+            this.negative = false
+        }
+
         if (power === '') {
             this.valid = false
             return
@@ -31,7 +44,7 @@ class SciNotNumber {
         }
 
         if (decimalsTemp > 1) {
-            while (decimalsTemp / 10**addToPower > 10) {
+            while (decimalsTemp / 10**addToPower >= 10) {
                 addToPower++
             }
             this.decimals = decimalsTemp / 10**addToPower
@@ -49,19 +62,20 @@ class SciNotNumber {
     }
 
     static invalidNumber = new SciNotNumber()
+    static zero = new SciNotNumber(0, 0)
 
     toString(places) {
-        return this.valid ? `${this.decimals?.toFixed(places || 3)}e${this.power}` : "invalid"
+        return this.valid ? `${this.negative ? "-" : ""}${this.decimals?.toFixed(places || 3)}e${this.power}` : "invalid"
     }
 
     toNumber() {
-        return this.decimals * 10**this.power
+        return this.valid ? (this.negative ? -1 : 1) * this.decimals * 10**this.power : NaN
     }
 
     add(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -72,14 +86,19 @@ class SciNotNumber {
             return null
         }
         let powerDifference = numberTemp.power - this.power
-        let decimalsTemp = this.decimals + numberTemp.decimals * 10**powerDifference
-        return new SciNotNumber(decimalsTemp, this.power)
+        if (this.negative === numberTemp.negative || this.negative === null || numberTemp.negative === null) {
+            let decimalsTemp = this.decimals + numberTemp.decimals * 10**powerDifference
+            return new SciNotNumber((this.negative ? -1 : 1) * decimalsTemp, this.power)
+        } else {
+            let decimalsTemp = this.decimals - numberTemp.decimals * 10**powerDifference
+            return new SciNotNumber((this.negative ? -1 : 1) *  decimalsTemp, this.power)
+        }
     }
 
     subtract(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -90,14 +109,19 @@ class SciNotNumber {
             return null
         }
         let powerDifference = numberTemp.power - this.power
-        let decimalsTemp = this.decimals - numberTemp.decimals * 10**powerDifference
-        return new SciNotNumber(decimalsTemp, this.power)
+        if (this.negative === numberTemp.negative || this.negative === null || numberTemp.negative === null) {
+            let decimalsTemp = this.decimals - numberTemp.decimals * 10**powerDifference
+            return new SciNotNumber((this.negative ? -1 : 1) * decimalsTemp, this.power)
+        } else {
+            let decimalsTemp = this.decimals + numberTemp.decimals * 10**powerDifference
+            return new SciNotNumber((this.negative ? -1 : 1) *  decimalsTemp, this.power)
+        }
     }
 
     multiply(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -109,13 +133,14 @@ class SciNotNumber {
         }
         let newPower = this.power + numberTemp.power
         let decimalsTemp = this.decimals * numberTemp.decimals
-        return new SciNotNumber(decimalsTemp, newPower)
+        if (this.negative ===  null || numberTemp.negative === null) return SciNotNumber.zero
+        return new SciNotNumber((this.negative === numberTemp.negative ? 1 : -1) * decimalsTemp, newPower)
     }
 
     divide(number) {
         var numberTemp
         if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -127,7 +152,8 @@ class SciNotNumber {
         }
         let newPower = this.power - numberTemp.power
         let decimalsTemp = this.decimals / numberTemp.decimals
-        return new SciNotNumber(decimalsTemp, newPower)
+        if (numberTemp.negative === null) return SciNotNumber.invalidNumber
+        return new SciNotNumber((this.negative === numberTemp.negative || this.negative === null ? 1 : -1) * decimalsTemp, newPower)
     }
 
     pow(number) {
@@ -135,7 +161,7 @@ class SciNotNumber {
         if (typeof number === "number") {
             return new SciNotNumber(this.decimals**number, this.power * number)
         } else if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -143,15 +169,44 @@ class SciNotNumber {
         } else if (typeof number === "string") {
             numberTemp = new SciNotNumber(number, 0)
         }
-        return new SciNotNumber(this.decimals**numberTemp.toNumber(), this.power * numberTemp.toNumber())
+        if (Number.isInteger(number.toNumber()) || !this.negative) {
+            return new SciNotNumber(this.decimals**numberTemp.toNumber(), this.power * numberTemp.toNumber())
+        } else {
+            return SciNotNumber.invalidNumber
+        }
+        
+    }
+
+    log() {
+        return this.valid ? new SciNotNumber(Math.log10(this.decimals) + this.power, 0) : SciNotNumber.invalidNumber
+    }
+
+    ln() {
+        return this.valid ? new SciNotNumber(Math.log(this.decimals) + this.power * Math.log(10), 0) : SciNotNumber.invalidNumber
+    }
+
+    logb(number) {
+        var numberTemp
+        if (typeof number === "number") {
+            return new SciNotNumber(Math.log(this.decimals) / Math.log(number) + this.power * Math.log(10) / Math.log(number), 0)
+        } else if (number instanceof SciNotNumber) {
+            if (number.valid && this.valid) {
+                numberTemp = number
+            } else {
+                return SciNotNumber.invalidNumber
+            }
+        } else if (typeof number === "string") {
+            numberTemp = new SciNotNumber(number, 0)
+        }
+        return new SciNotNumber(Math.log(this.decimals) / number.ln().toNumber() + this.power * Math.log(10) / number.ln().toNumber(), 0)
     }
 
     floor() {
-        return new SciNotNumber(Math.floor(this.toNumber()), 0)
+        return this.valid ? new SciNotNumber(Math.floor(this.toNumber()), 0) : SciNotNumber.invalidNumber
     }
 
     ceil() {
-        return new SciNotNumber(Math.ceil(this.toNumber()), 0)
+        return this.valid ? new SciNotNumber(Math.ceil(this.toNumber()), 0) : SciNotNumber.invalidNumber
     }
 
     mod(number) {
@@ -159,7 +214,7 @@ class SciNotNumber {
         if (typeof number === "number") {
             return new SciNotNumber(this.decimals**number, this.power * number)
         } else if (number instanceof SciNotNumber) {
-            if (number.valid) {
+            if (number.valid && this.valid) {
                 numberTemp = number
             } else {
                 return SciNotNumber.invalidNumber
@@ -168,7 +223,7 @@ class SciNotNumber {
             numberTemp = new SciNotNumber(number, 0)
         }
         let divided = this.divide(numberTemp)
-        return new SciNotNumber(this.subtract(divided.floor().multiply(this)), 0)
+        return new SciNotNumber(this.subtract(divided.floor().multiply(numberTemp)), 0)
     }
 }
 

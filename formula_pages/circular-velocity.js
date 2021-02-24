@@ -7,7 +7,7 @@ var previousRadiusInput = ""    // keeps track of the user's last valid input
 var previousVelocityInput = ""  //
 
 function massElementInput() {
-    if (sciNotRegex.test(massElement.value)) {
+    if (sciNotInputRegex.test(massElement.value)) {
         previousMassInput = massElement.value   // if input is valid, do nothing to the text in the box and set the variable to what's in the box
     } else {
         massElement.value = previousMassInput   // if the input is not valid, undo what was just inputted by setting back to the last valid value
@@ -15,7 +15,7 @@ function massElementInput() {
 }
 
 function radiusElementInput() {
-    if (sciNotRegex.test(radiusElement.value)) {
+    if (sciNotInputRegex.test(radiusElement.value)) {
         previousRadiusInput = radiusElement.value
     } else {
         radiusElement.value = previousRadiusInput
@@ -23,7 +23,7 @@ function radiusElementInput() {
 }
 
 function velocityElementInput() {
-    if (sciNotRegex.test(velocityElement.value)) {
+    if (sciNotInputRegex.test(velocityElement.value)) {
         previousVelocityInput = velocityElement.value
     } else {
         velocityElement.value = previousVelocityInput
