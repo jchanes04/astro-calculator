@@ -55,12 +55,12 @@ function getVelocity() {
         return null
     } else {
         switch (document.getElementById("velocity-units").value) {
-        case "m/s":
-            return input
-        case "mph":
-            return input.multiply(mph_to_meters_per_second)
-        case "c":
-            return input.multiply(speed_of_light)
+            case "m/s":
+                return input
+            case "mph":
+                return input.multiply(mph_to_meters_per_second)
+            case "c":
+                return input.multiply(speed_of_light)
         }
     }
 }

@@ -1,0 +1,26 @@
+<label for="wavelength">
+    <select id="wavelength-units" name="wavelength-units">
+        <option value="nm" selected="selected">nm</option>
+        <option value="&#181;m">&#181;m</option>
+        <option value="mm">mm</option>
+        <option value="m">m</option>
+        <option value="km">km</option>
+        <option value="&#8491;">&#8491;</option>
+    </select>
+    Wavelength:
+    <input id="wavelength" type="text" oninput="wavelengthElementInput()">
+</label>
+<br><br>
+<label for="temperature">
+    <select id="temperature-units" name="temperature-units">
+        <option value="&#176;K" selected="selected">&#176;K</option>
+        <option value="&#176;F">&#176;F</option>
+        <option value="&#176;C">&#176;C</option>
+    </select>
+    Temperature:
+    <input id="temperature" type="text" oninput="temperatureElementInput()">
+</label>
+<br><br>
+<button onclick="calculateWL()">Calculate</button>
+
+<h2 id="result"></h2>
