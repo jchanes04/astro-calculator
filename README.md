@@ -1,0 +1,2 @@
+# astro-calculator
+This project was made as a proof of concept for a desktop app that would simplify the process for performing complex astronomy calculations and converting units. This project is currently no longer being worked on, and there are undoubtedly many many design choices that could be improved on and made more functional for a real incarnation of this concept, feel free to fork and make any changes you want.
